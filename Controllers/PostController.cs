@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using BlogAppProjesi.Data.Concrete.EfCore;
 using BlogAppProjesi.Entity;
@@ -47,21 +48,24 @@ namespace BlogAppProjesi.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> AddComment(int PostId, string UserName, string Text) {
+        public async Task<JsonResult> AddComment(int PostId, string Text) {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var username = User.FindFirstValue(ClaimTypes.Name);
+            var avatar = User.FindFirstValue(ClaimTypes.UserData);
             var entity = new Comment {
                 Text = Text,
                 PublishedOn = DateTime.Now,
                 PostId = PostId,
-                User = new User { Name = UserName, Image = "p1.jpg"}
+                UserId = int.Parse(userId ?? "")
             };
             _context.Comments.Add(entity);
              await _context.SaveChangesAsync();
-             System.Console.WriteLine(UserName);
+
             return Json(new {
-                UserName,
+                username,
                 Text,
                 entity.PublishedOn,
-                entity.User.Image
+
             });
         }
     }

@@ -25,7 +25,50 @@ namespace BlogAppProjesi.Controllers
 
         public IActionResult Login()
         {
+            if (User.Identity!.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Post");
+            }
             return View();
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login");
+        }
+        public IActionResult Register()
+        {
+            if (User.Identity!.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Post");
+            }
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == model.UserName || x.Email == model.Email);
+                if(user == null)
+                {
+                    await _context.Users.AddAsync(new User {
+                        UserName  = model.UserName,
+                        Name = model.Name,
+                        Email = model.Email,
+                        Password = model.Password,
+                        Image = "avatar.jpg"
+                    });
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Username ya da Email kullanımda.");
+                }
+            }
+            
+            return View(model);
         }
 
         [HttpPost]
@@ -43,7 +86,7 @@ namespace BlogAppProjesi.Controllers
                     userClaims.Add(new Claim(ClaimTypes.GivenName, isUser.Name ?? ""));
                     userClaims.Add(new Claim(ClaimTypes.UserData, isUser.Image ?? ""));
 
-                    if(isUser.Email == "info@sadikturan.com")
+                    if (isUser.Email == "info@sadikturan.com")
                     {
                         userClaims.Add(new Claim(ClaimTypes.Role, "admin"));
                     }
@@ -51,7 +94,8 @@ namespace BlogAppProjesi.Controllers
                     var claimsIdentity = new ClaimsIdentity(userClaims, CookieAuthenticationDefaults.AuthenticationScheme);
                     //CookieAuthenticationDefaults.AuthenticationScheme cookie türünü belirledik
 
-                    var authProperties = new AuthenticationProperties {
+                    var authProperties = new AuthenticationProperties
+                    {
                         IsPersistent = true // beni hatırla fonksiyonu
                     };
 
@@ -59,7 +103,7 @@ namespace BlogAppProjesi.Controllers
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                                                     new ClaimsPrincipal(claimsIdentity), authProperties);
-                    return RedirectToAction("Index","Post");
+                    return RedirectToAction("Index", "Post");
                 }
                 else
                 {

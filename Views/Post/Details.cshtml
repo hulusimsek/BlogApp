@@ -34,23 +34,28 @@
                                 }
                             </div>
 
-                            <div>
-                                <h4 class="mb-3">Yorum Ekle</h4>
-                                <form action="/post/AddComment" method="post">
-                                    <input type="hidden" id="PostId" name="PostId" value="@Model.PostId">
-                                    <div class="mb-3">
-                                        <label for="UserName" class="form-label">Kullanıcı Adı</label>
-                                        <input type="text" name="UserName" id="UserName" class="form-control"></input>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="Text" class="form-label">Yorum</label>
-                                        <textarea type="text" name="Text" id="Text" rows="3" class="form-control"></textarea>
-                                    </div>
-                                    <div class="mb-3">
-                                        <button id="btnYorumKayit" type="submit" class="btn btn-primary">Kaydet</button>
-                                    </div>
-                                </form>
-                            </div>
+                            @if(User.Identity!.IsAuthenticated) {
+
+                            
+                                <hr class="my-4">
+                                <div>
+                                    <h4 class="mb-3">Yorum Ekle</h4>
+                                    <form action="/post/AddComment" method="post">
+                                        <input type="hidden" id="PostId" name="PostId" value="@Model.PostId">
+                                        <div class="mb-3">
+                                            <label for="Text" class="form-label">Yorum</label>
+                                            <textarea type="text" name="Text" id="Text" rows="3" class="form-control"></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <button id="btnYorumKayit" type="submit" class="btn btn-primary">Kaydet</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            }
+                            else {
+                                <p>Yorum için giriş yapınız. <a href="/user/login">Login</a></p>
+                            }
+
 
 
                         </div>
