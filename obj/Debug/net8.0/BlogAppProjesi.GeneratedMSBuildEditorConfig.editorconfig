@@ -26,8 +26,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Yazilim/Web-2/aspnet-core/BlogAppProjesi/Views/Post/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdFxEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Yazilim/Web-2/aspnet-core/BlogAppProjesi/Views/Post/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUG9zdFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Yazilim/Web-2/aspnet-core/BlogAppProjesi/Views/Shared/Components/NewPosts/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcTmV3UG9zdHNcRGVmYXVsdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Yazilim/Web-2/aspnet-core/BlogAppProjesi/Views/Shared/Components/TagsMenu/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcVGFnc01lbnVcRGVmYXVsdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Yazilim/Web-2/aspnet-core/BlogAppProjesi/Views/Shared/Error.cshtml]
@@ -36,6 +48,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Yazilim/Web-2/aspnet-core/BlogAppProjesi/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Yazilim/Web-2/aspnet-core/BlogAppProjesi/Views/User/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Yazilim/Web-2/aspnet-core/BlogAppProjesi/Views/_ViewImports.cshtml]
