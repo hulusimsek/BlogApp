@@ -46,28 +46,60 @@ namespace BlogAppProjesi.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(RegisterViewModel model, IFormFile imageFile)
         {
-            if(ModelState.IsValid)
+            var extension = "";
+            if (imageFile != null)
             {
-                var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == model.UserName || x.Email == model.Email);
-                if(user == null)
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
+                extension = Path.GetExtension(imageFile.FileName); // abc.jpg
+
+                if (!allowedExtensions.Contains(extension))
                 {
-                    await _context.Users.AddAsync(new User {
-                        UserName  = model.UserName,
-                        Name = model.Name,
-                        Email = model.Email,
-                        Password = model.Password,
-                        Image = "avatar.jpg"
-                    });
-                    return RedirectToAction("Login");
+                    ModelState.AddModelError("", "Geçerli bir resim seçiniz.");
+                }
+            }
+
+
+            if (ModelState.IsValid)
+            {
+                if (imageFile != null)
+                {
+                    var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == model.UserName || x.Email == model.Email);
+                    if (user == null)
+                    {
+
+                        var randomFileName = string.Format($"{Guid.NewGuid().ToString()}{extension}");
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img", randomFileName);
+                        using (var stream = new FileStream(path, FileMode.Create))
+                        {
+                            await imageFile.CopyToAsync(stream);
+                        };
+                        await _context.Users.AddAsync(new User
+                        {
+                            UserName = model.UserName,
+                            Name = model.Name,
+                            Email = model.Email,
+                            Password = model.Password,
+                            Image = randomFileName
+                        });
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction("Login");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Username veya Email kullanımda");
+                    }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Username ya da Email kullanımda.");
+                    ModelState.AddModelError("", "Resim seçmediniz");
                 }
             }
-            
+            else
+                {
+                    ModelState.AddModelError("", "Bilinmeyen hata");
+                }
             return View(model);
         }
 
@@ -111,6 +143,26 @@ namespace BlogAppProjesi.Controllers
                 }
             }
             return View(model);
+        }
+
+        public IActionResult Profile(string  username)
+        {
+            if(string.IsNullOrEmpty(username))
+            {
+                return NotFound();
+            }
+            var user = _context
+                        .Users
+                        .Include(x => x.Posts)
+                        .Include(x => x.Comments)
+                        .ThenInclude(x => x.Post)
+                        .FirstOrDefault(x => x.UserName == username);
+
+            if(user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
         }
 
     }

@@ -12,8 +12,10 @@
                         </div>
                         <div class="col-8">
                             <h5><a href="/posts/details/@post.Url" class="btn-link fw-bold">@post.Title</a></h5>
-                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maxime, odio.</p>
-                            <a href="" class="badge bg-danger bg-opacity-10 text-danger mb-2 fw-bold">Web Developer</a>
+                            <p>@post.Description</p>
+                            @foreach(var tag in post.Tags) {
+                            <a href="" class="badge bg-@tag.Color bg-opacity-10 text-danger mb-2 fw-bold">@tag.Text</a>
+                            }
                         </div>
                     </div>
                 </div>

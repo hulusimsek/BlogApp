@@ -17,7 +17,7 @@ builder.Services.AddDbContext<BlogContext>(options =>
     options.UseMySql(connectionString, version);
 });
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => options.LoginPath="/User/Login");
 
 var app = builder.Build();
 
@@ -46,6 +46,11 @@ app.MapControllerRoute(
     name: "post-details",
     pattern: "posts/details/{url}",
     defaults: new { controller = "Post", action = "Details" }
+    );
+app.MapControllerRoute(
+    name: "post-details",
+    pattern: "user/{username}",
+    defaults: new { controller = "User", action = "Profile" }
     );
     app.MapControllerRoute(
     name: "post-details",

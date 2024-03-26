@@ -17,10 +17,6 @@ namespace BlogAppProjesi.Models
         [EmailAddress]
         [Display(Name = "Eposta")]
         public string? Email { get; set;}
-
-        [Display(Name="Resim")]
-        public string? Image { get; set; } = string.Empty;
-
         [Required]  
         [StringLength(10, ErrorMessage = "{0} alanı en  az {2} karakter uzunluğunda olmalıdır.", MinimumLength = 6)]
         [DataType(DataType.Password)]

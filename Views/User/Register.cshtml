@@ -4,7 +4,7 @@
     <div class="col-12">
         <div class="bg-white p-4">
             <h1>Kayıt Ol</h1>
-            <form action="Register" method="post" novalidate>
+            <form action="Register" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="mb-3">
                     <label asp-for="UserName" class="form-label">Kullanıcı Adı</label>
@@ -20,6 +20,10 @@
                     <label asp-for="Email" class="form-label"></label>
                     <input asp-for="Email" class="form-control">
                     <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="imageFile" class="form-label">Resminiz</label>
+                    <input type="file" name="imageFile" id="imageFile" class="form-control">
                 </div>
                 <div class="mb-3">
                     <label asp-for="Password" class="form-label"></label>
